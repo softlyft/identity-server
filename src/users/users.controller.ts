@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import {
     Controller,
     Get,
@@ -30,10 +31,15 @@ export class UsersController {
   }
 
   @Post('users')
-  async postUser(
+  async registerUser(
     @Request() req,
   ): Promise<any> {
-
-    return await this.usersService.create(req.body);
+    const { firstName, lastName, email, password } = req.body;
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(password, salt);
+    const userData = {
+        firstName, lastName, email, salt, hash
+    };
+    return await this.usersService.create(userData);
   }
 }
