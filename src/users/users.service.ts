@@ -10,13 +10,15 @@ export class UsersService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(createUserDto);
-
     const res = await createdUser.save();
-    console.log(res);
     return res;
   }
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+    return this.userModel.find();
+  }
+
+  async findOne(email: string): Promise<User | undefined> {
+    return this.userModel.findOne( { email });
   }
 }
