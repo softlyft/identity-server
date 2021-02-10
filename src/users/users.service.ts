@@ -25,4 +25,8 @@ export class UsersService {
   async findUserByEmail(email: string): Promise<User | undefined> {
     return this.userModel.findOne( { email }).select('+hash +salt');
   }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    return this.userModel.findOne( { username });
+  }
 }

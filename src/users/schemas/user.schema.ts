@@ -19,6 +19,9 @@ export class User {
 
   @Prop({ select: false, required: true })
   hash: string;
+
+  @Prop({ unique: true })
+  username: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -3,6 +3,7 @@ import {
     Controller,
     Get,
     Post,
+    Param,
     Body,
     BadRequestException,
     UseGuards,
@@ -39,15 +40,24 @@ export class UsersController {
     return await this.usersService.getUser(userId);
   }
 
-  @Post('users')
+  @UseGuards(JwtAuthGuard)
+  @Get('user/:username')
+  async getUserByUsername(
+    @Param('username') username: string,
+    @Request() req,
+  ): Promise<any> {
+    return await this.usersService.getUserByUsername(username);
+  }
+
+  @Post('user')
   async registerUser(
     @Request() req,
   ): Promise<any> {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, username } = req.body;
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(password, salt);
     const userData = {
-        firstName, lastName, email, salt, hash
+        firstName, lastName, email, salt, hash, username
     };
     return await this.usersService.create(userData);
   }
