@@ -41,6 +41,16 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Put('user')
+  async updateUser(
+    @Request() req,
+  ): Promise<any> {
+    const userId = req.user._id;
+    const payload = req.body;
+    return await this.usersService.updateUser(userId, payload);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('user/:username')
   async getUserByUsername(
     @Param('username') username: string,
