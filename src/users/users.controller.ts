@@ -24,6 +24,15 @@ export class UsersController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
+  @Get('validate')
+  async validateToken(
+    @Request() req,
+  ): Promise<any> {
+    return true;
+  }
+
+
+  @UseGuards(JwtAuthGuard)
   @Get('users')
   async getUsers(
     @Request() req,
