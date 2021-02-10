@@ -14,11 +14,15 @@ export class UsersService {
     return res;
   }
 
-  async findAll(): Promise<User[]> {
+  async getUsers(): Promise<User[]> {
     return this.userModel.find();
   }
 
-  async findOne(email: string): Promise<User | undefined> {
-    return this.userModel.findOne( { email });
+  async getUser(userId: string): Promise<User | undefined> {
+    return this.userModel.findOne({ _id: userId });
+  }
+
+  async findUserByEmail(email: string): Promise<User | undefined> {
+    return this.userModel.findOne( { email }).select('+hash +salt');
   }
 }

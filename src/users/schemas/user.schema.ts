@@ -14,10 +14,10 @@ export class User {
   @Prop({ unique: true })
   email: string;
 
-  @Prop()
+  @Prop({ select: false, required: true })
   salt: string;
 
-  @Prop()
+  @Prop({ select: false, required: true })
   hash: string;
 }
 

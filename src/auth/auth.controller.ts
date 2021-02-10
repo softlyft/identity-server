@@ -12,6 +12,7 @@ import {
     UploadedFile,
     UseInterceptors,
   } from '@nestjs/common';
+  import { LocalAuthGuard } from './guards/local-auth.guard';
   import { AuthService } from './auth.service';
 
 @Controller()
@@ -20,8 +21,10 @@ export class AuthController {
     private authService: AuthService
   ) {}
 
+  @UseGuards(LocalAuthGuard)
+  @HttpCode(200)
   @Post('auth/login')
   async login(@Request() req) {
-    return this.authService.login(req.body);
+    return this.authService.login(req.user);
   }
 }

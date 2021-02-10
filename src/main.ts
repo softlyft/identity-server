@@ -11,8 +11,8 @@ async function bootstrap() {
   app.use(helmet());
   app.enableCors();
 
-  app.use(cookieParser())
-  app.use(csurf({ cookie: true }));
+  // app.use(cookieParser())
+  // app.use(csurf({ cookie: true }));
   app.use(
     rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes
