@@ -13,6 +13,7 @@ import {
     UploadedFile,
     UseInterceptors,
   } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UsersService } from './users.service';
 
 @Controller()
@@ -21,13 +22,21 @@ export class UsersController {
     private readonly usersService: UsersService
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get('users')
   async getUsers(
     @Request() req,
   ): Promise<any> {
-      return {
-          message: 'Here is the user'
-      }
+    return await this.usersService.getUsers();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('user')
+  async getUser(
+    @Request() req,
+  ): Promise<any> {
+    const userId = req.user._id;
+    return await this.usersService.getUser(userId);
   }
 
   @Post('users')
