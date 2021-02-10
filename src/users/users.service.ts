@@ -22,6 +22,14 @@ export class UsersService {
     return this.userModel.findOne({ _id: userId });
   }
 
+  async updateUser(userId: string, payload: any): Promise<User | undefined> {
+    const record = {
+      firstName: payload.firstName,
+      lastName: payload.lastName
+    }
+    return this.userModel.updateOne({ _id: userId }, record);
+  }
+
   async findUserByEmail(email: string): Promise<User | undefined> {
     return this.userModel.findOne( { email }).select('+hash +salt');
   }
